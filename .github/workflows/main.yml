@@ -1,1 +1,29 @@
+name: Deploy Repository A
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Remove Existing Files from Destination Folder
+      shell: pwsh
+      run: |
+        Remove-Item -Path "D:\Path*" -Recurse -Force
+
+    - name: Move Code to Destination Folder
+      shell: pwsh
+      run: |
+        
+        # Move all folders and files to the destination folder
+        Move-Item -Path * -Destination "D:\Path" -Force
+
+    # Continue with other steps as needed
 
