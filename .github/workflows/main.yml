@@ -9,8 +9,8 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
       with:
-        paths-ignore: |
-          .github
+        ref: ${{ github.ref }}
+        fetch-depth: 0
 
     - name: Remove Existing Files from Destination Folder
       shell: pwsh
