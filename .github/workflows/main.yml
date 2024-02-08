@@ -8,14 +8,14 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-      with:
-        ref: ${{ github.ref }}
-        fetch-depth: 0
+    # with:
+      #  ref: ${{ github.ref }}
+      # fetch-depth: 0
 
     - name: Remove Existing Files from Destination Folder
       shell: pwsh
       run: |
-        Remove-Item -Path "D:\Path\" -Recurse -Force
+        Remove-Item -Path "D:\Path*" -Recurse -Force
 
     - name: Move Code to Destination Folder
       shell: pwsh
