@@ -9,10 +9,10 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v4
 
-    - name: Remove Existing Files from Destination Folder
-      shell: pwsh
-      run: |
-        Remove-Item -Path "D:\Path*" -Recurse -Force
+ #   - name: Remove Existing Files from Destination Folder
+  #    shell: pwsh
+   #   run: |
+    #    Remove-Item -Path "D:\Path*" -Recurse -Force
 
     - name: Move Code to Destination Folder
       shell: pwsh
