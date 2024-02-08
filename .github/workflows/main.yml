@@ -20,4 +20,4 @@ jobs:
     - name: Move Code to Destination Folder
       shell: pwsh
       run: |
-        Move-Item -Path * -Destination "D:\Path" -Force
+        Move-Item -Path "C:\Windows\System32\actions-runner\_work\samplespringboot\samplespringboot\*" -Destination "D:\Path" -Force
