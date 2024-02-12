@@ -8,16 +8,22 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
-    # with:
-      #  ref: ${{ github.ref }}
-      # fetch-depth: 0
-
+      with:
+        ref: ${{ github.ref }}
+        fetch-depth: 0
+    - name: Remove .github folder
+      shell: pwsh
+      run: |
+        Remove-Item -Path ".github" -Recurse -Force
+        Remove-Item -Path ".git" -Recurse -Force 
     - name: Remove Existing Files from Destination Folder
       shell: pwsh
       run: |
-        Remove-Item -Path "D:\Path\*" -Recurse -Force
+        Remove-Item -Path "D:\Path*" -Recurse -Force
 
     - name: Move Code to Destination Folder
       shell: pwsh
       run: |
-        Move-Item -Path "C:\Windows\System32\actions-runner\_work\samplespringboot\samplespringboot\*" -Destination "D:\Path" -Force
+        
+        # Move all folders and files to the destination folder
+        Move-Item -Path * -Destination "D:\Path" -Force      
