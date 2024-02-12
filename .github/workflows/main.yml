@@ -12,8 +12,8 @@ jobs:
     - name: Remove .github folder
       shell: pwsh
       run: |
-        Remove-Item -Path ".github" -Recurse -Force
-       # Remove-Item -Path ".git" -Recurse -Force 
+       # Remove-Item -Path ".github" -Recurse -Force
+        Remove-Item -Path ".git" -Recurse -Force 
     - name: Remove Existing Files from Destination Folder
       shell: pwsh
       run: |
