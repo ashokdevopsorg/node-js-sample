@@ -1,27 +1,27 @@
-name: Deploy Repository A
+name: Publish to GitHub Package Registry
 
-on: push
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  deploy:
-    runs-on: self-hosted
+  publish:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
       
-    - name: Remove .github folder
-      shell: pwsh
+    - name: Zip Files
       run: |
-        Remove-Item -Path ".github\workflows" -Recurse -Force
-        Remove-Item -Path ".git" -Recurse -Force 
-    - name: Remove Existing Files from Destination Folder
-      shell: pwsh
-      run: |
-        Remove-Item -Path "D:\Path*" -Recurse -Force
-
-    - name: Move Code to Destination Folder
-      shell: pwsh
-      run: |
-        
-        # Move all folders and files to the destination folder
-        Move-Item -Path * -Destination "D:\Path" -Force      
+        # Navigate into the checked out directory
+        cd $GITHUB_WORKSPACE
+        # Zip all files and folders excluding .git and .github
+        zip -r my-package.zip . -x "*.git*" "*.github*"
+      
+    - name: Publish Package
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-package
+        path: my-package.zip
