@@ -14,7 +14,7 @@ jobs:
       run: |
         # Navigate into the checked out directory
         cd $GITHUB_WORKSPACE
-        #zip -r my-package.zip . 
+         #zip -r my-package.zip . 
         # Zip all files and folders excluding .git and .github
         zip -r my-package.zip . -x "*.git*" "*.github*"
       
