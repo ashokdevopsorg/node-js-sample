@@ -1,6 +1,6 @@
 name: Publish to GitHub Package Registry
 
-on: push
+on: workflow_dispatch
 
 jobs:
   publish:
@@ -14,9 +14,9 @@ jobs:
       run: |
         # Navigate into the checked out directory
         cd $GITHUB_WORKSPACE
-        zip -r my-package.zip . 
+        #zip -r my-package.zip . 
         # Zip all files and folders excluding .git and .github
-        #zip -r my-package.zip . -x "*.git*" "*.github*"
+        zip -r my-package.zip . -x "*.git*" "*.github*"
       
     - name: Publish Package
       uses: actions/upload-artifact@v2
