@@ -23,10 +23,10 @@ jobs:
     needs: publish
     steps:
     - name: downlaod the packages
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with: 
         name: my-package
-        path: .
+        
     - name: Display structure of downloaded files
       shell: pwsh
       run: |
