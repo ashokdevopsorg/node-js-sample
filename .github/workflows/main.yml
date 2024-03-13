@@ -10,15 +10,10 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
       
-    - name: Zip Files
-      run: |
-        # Navigate into the checked out directory
-        cd $GITHUB_WORKSPACE
-        # Zip all files and folders excluding .git and .github
-        zip -r my-package.zip . -x "*.git*" "*.github*"
+    
       
     - name: Publish Package
       uses: actions/upload-artifact@v2
       with:
         name: my-package
-        path: my-package.zip
+        path: ./my-package
