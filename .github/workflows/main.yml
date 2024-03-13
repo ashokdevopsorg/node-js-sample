@@ -1,6 +1,6 @@
 name: Publish to GitHub Package Registry
 
-on: push
+on: [push,workflow_dispatch]
 
 jobs:
   publish:
