@@ -30,5 +30,17 @@ jobs:
     - name: Display structure of downloaded files
       shell: pwsh
       run: |
-        Write-Host "Executing PowerShell commands..."
+        dir
+
+    - name: Remove Existing Files from Destination Folder
+      shell: pwsh
+      run: |
+        Remove-Item -Path "C:\test\*" -Recurse -Force
+    - name: Move Code to Destination Folder
+      shell: pwsh
+      run: |
+        
+        # Move all folders and files to the destination folder
+        Move-Item -Path * -Destination "C:\test" -Force  
+
         
