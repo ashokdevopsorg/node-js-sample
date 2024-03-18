@@ -13,6 +13,7 @@ jobs:
       uses: actions/download-artifact@v3
       with: 
         name: '${{ env.pacakge-version }}'
+        path: previous-artifact
         
     - name: Display structure of downloaded files
       shell: pwsh
