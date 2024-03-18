@@ -17,7 +17,7 @@ jobs:
     - name: Publish Package
       uses: actions/upload-artifact@v2
       with:
-        name: '${{env.version-major}}.${{env.version-minor}}.${{github.run_rumber}}'
+        name: '${{ env.version-major }}.${{ env.version-minor }}.${{ github.run_rumber }}'
         path: .
 
   
@@ -29,7 +29,7 @@ jobs:
     - name: downlaod the packages
       uses: actions/download-artifact@v3
       with: 
-        name: '${{env.version-major}}.${{env.version-minor}}.${{github.run_rumber}}'
+        name: '${{ env.version-major }}.${{ env.version-minor }}.${{ github.run_rumber }}'
         
     - name: Display structure of downloaded files
       shell: pwsh
