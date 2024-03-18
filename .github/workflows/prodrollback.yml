@@ -1,0 +1,31 @@
+name: Prodrollback
+
+on: [workflow_dispatch]
+
+env:
+  pacakge-version: 1.1.73
+jobs:
+  
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - name: downlaod the packages
+      uses: actions/download-artifact@v3
+      with: 
+        name: '${{ env.pacakge-version }}'
+        
+    - name: Display structure of downloaded files
+      shell: pwsh
+      run: |
+        dir
+
+    - name: Remove Existing Files from Destination Folder
+      shell: pwsh
+      run: |
+        Remove-Item -Path "C:\test\*" -Recurse -Force
+    - name: Move Code to Destination Folder
+      shell: pwsh
+      run: |
+        
+        # Move all folders and files to the destination folder
+        Move-Item -Path * -Destination "C:\test" -Force  
