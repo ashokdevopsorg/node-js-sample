@@ -3,7 +3,7 @@ name: Prodrollback
 on: [workflow_dispatch]
 
 env:
-  pacakge-version: 1.1.73
+  pacakge-version: 1.1.75
 jobs:
   
   deploy:
