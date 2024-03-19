@@ -12,7 +12,7 @@ jobs:
     - name: downlaod the packages
       uses: actions/download-artifact@v3
       with: 
-        name: '${{ env.pacakge-version }}'
+        name: 1.1.75
         path: .
         
     - name: Display structure of downloaded files
