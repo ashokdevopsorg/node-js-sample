@@ -19,7 +19,31 @@ jobs:
       with:
         name: '${{ env.version-major }}.${{ env.version-minor }}.${{github.run_number}}'
         path: .
-        persist: true
+
+  deploy:
+    runs-on: self-hosted
+    needs: publish
+    steps:
+    - name: downlaod the packages
+      uses: actions/download-artifact@v3
+      with: 
+        name: '${{ env.version-major }}.${{ env.version-minor }}.${{github.run_number}}'
+        
+    - name: Display structure of downloaded files
+      shell: pwsh
+      run: |
+        dir
+
+    - name: Remove Existing Files from Destination Folder
+      shell: pwsh
+      run: |
+        Remove-Item -Path "C:\test\*" -Recurse -Force
+    - name: Move Code to Destination Folder
+      shell: pwsh
+      run: |
+        
+        # Move all folders and files to the destination folder
+        Move-Item -Path * -Destination "C:\test" -Force       
 
   
 
