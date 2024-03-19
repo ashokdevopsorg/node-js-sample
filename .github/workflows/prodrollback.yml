@@ -7,13 +7,13 @@ env:
 jobs:
   
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, ubuntu-latest]
     steps:
     - name: downlaod the packages
       uses: actions/download-artifact@v3
       with: 
         name: '${{ env.pacakge-version }}'
-        path: previous-artifact
+        path: .
         
     - name: Display structure of downloaded files
       shell: pwsh
