@@ -7,15 +7,19 @@ env:
 jobs:
   
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: downlaod the packages
-      uses: aochmann/actions-download-artifact@1.0.0
+      uses: benday-inc/download-latest-artifact@main
       with:
-        github_token: ${{secrets.GITHUB_TOKEN}} 
-        repo: ${{github.repository}}
-        name: 1.1.75
-        path: .
+        token: ${{ secrets.TOKEN_WITH_PERMISSIONS }}' 
+        repository_owner: 'ashokdevopsorg'
+        repository_name: 'node-js-sample'
+        workflow_name: 'Publish to GitHub Package Registry'
+        branch_name: 'master'
+        artifact_name: '1.1.75'
+        #run_id: 8344693852
+        download_path: .
         
     - name: Display structure of downloaded files
       shell: pwsh
@@ -31,4 +35,4 @@ jobs:
       run: |
         
         # Move all folders and files to the destination folder
-        Move-Item -Path * -Destination "C:\test" -Force  
+        Move-Item -Path * -Destination "C:\test" -Force
