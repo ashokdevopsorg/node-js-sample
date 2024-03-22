@@ -7,7 +7,7 @@ env:
 jobs:
   
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - name: downlaod the packages
       uses:  benday-inc/download-artifact@main
