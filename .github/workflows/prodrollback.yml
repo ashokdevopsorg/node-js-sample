@@ -10,15 +10,15 @@ jobs:
     runs-on: self-hosted
     steps:
     - name: downlaod the packages
-      uses:  benday-inc/download-artifact@main
+      uses:  benday-inc/download-latest-artifact@main
       with:
         token: ${{ secrets.TOKEN_WITH_PERMISSIONS }} 
         repository_owner: 'ashokdevopsorg'
         repository_name: 'node-js-sample'
         workflow_name: 'Publish to GitHub Package Registry'
-        #branch_name: 'master'
+        branch_name: 'master'
         artifact_name: '1.1.75'
-        run_id: 8344693852
+        #run_id: 8344693852
         download_path: .
         download_filename: 1.1.75.zip
         
