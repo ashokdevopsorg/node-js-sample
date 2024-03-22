@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: downlaod the packages
-      uses: actions/download-artifact@v3
-      with: 
+      uses: aochmann/actions-download-artifact@1.0.0
+      with:
+        github_token: ${{secrets.GITHUB_TOKEN}} 
+        repo: ${{github.repository}}
         name: 1.1.75
         path: .
         
