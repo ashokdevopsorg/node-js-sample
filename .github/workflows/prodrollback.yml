@@ -12,7 +12,7 @@ jobs:
     - name: downlaod the packages
       uses:  benday-inc/download-artifact@main
       with:
-        token: ${{ secrets.TOKEN_WITH_PERMISSIONS }}' 
+        token: ${{ secrets.TOKEN_WITH_PERMISSIONS }} 
         repository_owner: 'ashokdevopsorg'
         repository_name: 'node-js-sample'
         workflow_name: 'Publish to GitHub Package Registry'
