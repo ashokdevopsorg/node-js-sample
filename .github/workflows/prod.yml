@@ -32,4 +32,4 @@ jobs:
       shell: bash
       run: |
         ls -ltr
-        unzip -v artifact.zip
+        #unzip -v artifact.zip
