@@ -1,0 +1,42 @@
+name: Prod
+
+on: [workflow_dispatch]
+
+env:
+  pacakge-version: 1.1.75
+jobs:
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: downlaod the packages
+      shell: pwsh
+      run: |
+        $accessToken = "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"
+        $owner = "ashokdevopsorg"
+        $repo = "node-js-sample"
+        $runId = "8323049963"
+
+        $url = "https://api.github.com/repos/$owner/$repo/actions/runs/$runId/artifacts"
+       
+        $response = Invoke-RestMethod -Uri $url -Headers @{
+            "Authorization" = "Bearer $accessToken"
+            "Accept" = "application/vnd.github.v3+json"
+        }
+
+        $ArtifactId = $response.artifacts.id
+
+        $Headers = @{
+            "Authorization" = "token $accessToken"
+            "Accept" = "application/vnd.github.v3+json"
+        }
+
+        $ArtifactUrl = "https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
+        Invoke-RestMethod -Uri $ArtifactUrl -Headers $Headers -OutFile artifact.zip
+              
+   
+    - name: Display structure of downloaded files
+      shell: pwsh
+      run: |
+        dir  
+
