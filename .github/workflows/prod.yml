@@ -21,7 +21,7 @@ jobs:
 
         curl -u $token \
         -L -o artifact.zip \
-        https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
+        https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip
        
        # ArtifactUrl="https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
         #curl -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$ArtifactUrl" -o artifact.zip
