@@ -36,14 +36,15 @@ jobs:
           const artifactName = process.env.INPUT_ARTIFACT_NAME;
 
           // Hardcoded token value
-          const token = 'YOUR_TOKEN_HERE';
+          const token = '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';
 
           const url = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/runs/' + runId + '/artifacts';
 
           const options = {
             headers: {
               'Authorization': 'Bearer ' + token,
-              'Accept': 'application/vnd.github.v3+json'
+              'Accept': 'application/vnd.github.v3+json',
+              'User-Agent': 'GitHub Actions'
             }
           };
 
@@ -55,19 +56,24 @@ jobs:
             });
 
             res.on('end', () => {
-              const response = JSON.parse(data);
-              const artifact = response.artifacts.find(artifact => artifact.name === artifactName);
-              if (!artifact) {
-                console.error('Artifact with name \'' + artifactName + '\' not found.');
+              try {
+                const response = JSON.parse(data);
+                const artifact = response.artifacts.find(artifact => artifact.name === artifactName);
+                if (!artifact) {
+                  console.error('Artifact with name \'' + artifactName + '\' not found.');
+                  process.exit(1);
+                }
+                const artifactId = artifact.id;
+                const artifactUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/artifacts/' + artifactId + '/zip';
+
+                https.get(artifactUrl, options, (res) => {
+                  const file = fs.createWriteStream('artifact.zip');
+                  res.pipe(file);
+                });
+              } catch (error) {
+                console.error('Error:', error);
                 process.exit(1);
               }
-              const artifactId = artifact.id;
-              const artifactUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/artifacts/' + artifactId + '/zip';
-
-              https.get(artifactUrl, options, (res) => {
-                const file = fs.createWriteStream('artifact.zip');
-                res.pipe(file);
-              });
             });
           });
           EOF
