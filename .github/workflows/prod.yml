@@ -32,7 +32,7 @@ jobs:
           const owner = process.env.INPUT_OWNER;
           const repo = process.env.INPUT_REPO;
           const runId = process.env.INPUT_RUN_ID;
-          const token = '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'
+          const token = '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';
           const artifactName = process.env.INPUT_ARTIFACT_NAME;
 
           const url = `https://api.github.com/repos/${owner}/${repo}/actions/runs/${runId}/artifacts`;
