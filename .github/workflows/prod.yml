@@ -12,7 +12,7 @@ jobs:
     - name: downlaod the packages
       shell: pwsh
       run: |
-        $accessToken = "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"
+        #$accessToken = "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"
         $owner = "ashokdevopsorg"
         $repo = "node-js-sample"
         $runId = "8323049963"
@@ -20,14 +20,14 @@ jobs:
         $url = "https://api.github.com/repos/$owner/$repo/actions/runs/$runId/artifacts"
        
         $response = Invoke-RestMethod -Uri $url -Headers @{
-            "Authorization" = "Bearer $accessToken"
+            "Authorization" = "Bearer ${{secrets.Token}}"
             "Accept" = "application/vnd.github.v3+json"
         }
 
         $ArtifactId = $response.artifacts.id
 
         $Headers = @{
-            "Authorization" = "token $accessToken"
+            "Authorization" = "token "Bearer ${{secrets.Token}}"
             "Accept" = "application/vnd.github.v3+json"
         }
 
