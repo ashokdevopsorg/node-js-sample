@@ -12,7 +12,7 @@ jobs:
     - name: downlaod the packages
       shell: pwsh
       run: |
-        $accessToken = "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"
+        $accessToken = ${{ secrets.TOKEN }}
         $owner = "ashokdevopsorg"
         $repo = "node-js-sample"
         $runId = "8389493864"
