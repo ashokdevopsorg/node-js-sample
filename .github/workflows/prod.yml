@@ -26,5 +26,4 @@ jobs:
       shell: bash
       run: |
         ls -ltr
-        unzip artifact.zip
-        cat artifact
+        unzip -q artifact.zip -d extracted_contents
