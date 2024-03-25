@@ -4,21 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       owner:
-        description: 'ashokdevopsorg'
+        description: 'Owner Name'
         required: true
       repo:
         description: 'Repository Name'
         required: true
       run-id:
-        description: 'node-js-sample'
+        description: 'Run ID'
         required: true
       artifact-name:
-        description: '8323049963'
+        description: 'Artifact Name'
         required: true
 
 jobs:
   deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
         uses: actions/setup-node@v2
@@ -32,14 +32,16 @@ jobs:
           const owner = process.env.INPUT_OWNER;
           const repo = process.env.INPUT_REPO;
           const runId = process.env.INPUT_RUN_ID;
-          const token = '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';
           const artifactName = process.env.INPUT_ARTIFACT_NAME;
 
-          const url = `https://api.github.com/repos/${owner}/${repo}/actions/runs/${runId}/artifacts`;
+          // Hardcoded token value
+          const token = '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';
+
+          const url = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/runs/' + runId + '/artifacts';
 
           const options = {
             headers: {
-              'Authorization': `Bearer ${token}`,
+              'Authorization': 'Bearer ' + token,
               'Accept': 'application/vnd.github.v3+json'
             }
           };
@@ -55,11 +57,11 @@ jobs:
               const response = JSON.parse(data);
               const artifact = response.artifacts.find(artifact => artifact.name === artifactName);
               if (!artifact) {
-                console.error(`Artifact with name '${artifactName}' not found.`);
+                console.error('Artifact with name \'' + artifactName + '\' not found.');
                 process.exit(1);
               }
               const artifactId = artifact.id;
-              const artifactUrl = `https://api.github.com/repos/${owner}/${repo}/actions/artifacts/${artifactId}/zip`;
+              const artifactUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/artifacts/' + artifactId + '/zip';
 
               https.get(artifactUrl, options, (res) => {
                 const file = fs.createWriteStream('artifact.zip');
@@ -68,13 +70,7 @@ jobs:
             });
           });
         env:
-          #TOKEN: "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"
           INPUT_OWNER: ${{ github.event.inputs.owner }}
           INPUT_REPO: ${{ github.event.inputs.repo }}
           INPUT_RUN_ID: ${{ github.event.inputs.run-id }}
           INPUT_ARTIFACT_NAME: ${{ github.event.inputs.artifact-name }}
-      - name: Display structure of downloaded files
-        shell: pwsh
-        run: |
-          $list = dir
-          Write-Host "$list "
