@@ -68,7 +68,7 @@ jobs:
             });
           });
         env:
-          TOKEN: ${{secrets.TOKEN}}
+          TOKEN: "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"
           INPUT_OWNER: ${{ github.event.inputs.owner }}
           INPUT_REPO: ${{ github.event.inputs.repo }}
           INPUT_RUN_ID: ${{ github.event.inputs.run-id }}
