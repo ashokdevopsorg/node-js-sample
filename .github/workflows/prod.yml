@@ -30,4 +30,4 @@ jobs:
       shell: bash
       run: |
         ls -ltr
-        unzip -q artifact.zip -d extracted_contents
+        unzip -v artifact.zip
