@@ -19,8 +19,12 @@ jobs:
         response=$(curl -X GET -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$url")
         ArtifactId=$(echo "$response" | jq -r .artifacts[0].id)
 
-        ArtifactUrl="https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
-        curl -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$ArtifactUrl" -o artifact.zip
+        curl -u $token \
+        -L -o artifact.zip \
+        https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
+       
+       # ArtifactUrl="https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
+        #curl -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$ArtifactUrl" -o artifact.zip
    
     - name: Display structure of downloaded files
       shell: bash
