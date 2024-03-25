@@ -18,57 +18,42 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Download Artifact
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '14.x'
       - name: Download Artifact
+        shell: pwsh
         run: |
-          const https = require('https');
-          const fs = require('fs');
+          $owner = $env:INPUT_OWNER
+          $repo = $env:INPUT_REPO
+          $runId = $env:INPUT_RUN_ID
+          $artifactName = $env:INPUT_ARTIFACT_NAME
+          
+          # Hardcoded token value
+          $token = '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'
 
-          const owner = process.env.INPUT_OWNER;
-          const repo = process.env.INPUT_REPO;
-          const runId = process.env.INPUT_RUN_ID;
-          const artifactName = process.env.INPUT_ARTIFACT_NAME;
+          $url = "https://api.github.com/repos/$owner/$repo/actions/runs/$runId/artifacts"
 
-          // Hardcoded token value
-          const token = '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';
+          $headers = @{
+            "Authorization" = "Bearer $token"
+            "Accept" = "application/vnd.github.v3+json"
+          }
 
-          const url = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/runs/' + runId + '/artifacts';
+          $response = Invoke-RestMethod -Uri $url -Headers $headers
+          $artifact = $response.artifacts | Where-Object { $_.name -eq $artifactName }
 
-          const options = {
-            headers: {
-              'Authorization': 'Bearer ' + token,
-              'Accept': 'application/vnd.github.v3+json'
-            }
-          };
+          if (-not $artifact) {
+            Write-Error "Artifact with name '$artifactName' not found."
+            exit 1
+          }
 
-          https.get(url, options, (res) => {
-            let data = '';
+          $artifactId = $artifact.id
+          $artifactUrl = "https://api.github.com/repos/$owner/$repo/actions/artifacts/$artifactId/zip"
 
-            res.on('data', (chunk) => {
-              data += chunk;
-            });
-
-            res.on('end', () => {
-              const response = JSON.parse(data);
-              const artifact = response.artifacts.find(artifact => artifact.name === artifactName);
-              if (!artifact) {
-                console.error('Artifact with name \'' + artifactName + '\' not found.');
-                process.exit(1);
-              }
-              const artifactId = artifact.id;
-              const artifactUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/actions/artifacts/' + artifactId + '/zip';
-
-              https.get(artifactUrl, options, (res) => {
-                const file = fs.createWriteStream('artifact.zip');
-                res.pipe(file);
-              });
-            });
-          });
+          Invoke-WebRequest -Uri $artifactUrl -Headers $headers -OutFile artifact.zip
         env:
           INPUT_OWNER: ${{ github.event.inputs.owner }}
           INPUT_REPO: ${{ github.event.inputs.repo }}
