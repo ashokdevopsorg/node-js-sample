@@ -25,4 +25,4 @@ jobs:
     - name: Display structure of downloaded files
       shell: bash
       run: |
-        unzip -l artifact.zip
+        ls -ltr
