@@ -20,14 +20,14 @@ jobs:
         $url = "https://api.github.com/repos/$owner/$repo/actions/runs/$runId/artifacts"
        
         $response = Invoke-RestMethod -Uri $url -Headers @{
-            "Authorization" = "Bearer ${{secrets.Token}}"
+            "Authorization" = "Bearer $env:Token"
             "Accept" = "application/vnd.github.v3+json"
         }
 
         $ArtifactId = $response.artifacts.id
 
         $Headers = @{
-            "Authorization" = "token "Bearer ${{secrets.Token}}"
+            "Authorization" = "token "Bearer $env:Token"
             "Accept" = "application/vnd.github.v3+json"
         }
 
