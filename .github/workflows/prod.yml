@@ -18,7 +18,7 @@ jobs:
 
           response=$(curl -X GET -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$url")
           ArtifactId=$(echo "$response" | jq -r .artifacts[0].id)
-          echo "ArtifactId"
+          Write-Host "ArtifactId"
           # Download the artifact zip file
           curl -L \
             -H "Accept: application/vnd.github.v3+json" \
