@@ -19,9 +19,11 @@ jobs:
         response=$(curl -X GET -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$url")
         ArtifactId=$(echo "$response" | jq -r .artifacts[0].id)
 
-        curl -u $token \
-        -L -o artifact.zip \
-        https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip
+        curl -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $token" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+        https://api.github.com/repos/OWNER/REPO/actions/artifacts/$ArtifactId/zip
        
        # ArtifactUrl="https://api.github.com/repos/$owner/$repo/actions/artifacts/$ArtifactId/zip"
         #curl -s -H "Authorization: Bearer $token" -H "Accept: application/vnd.github.v3+json" "$ArtifactUrl" -o artifact.zip
