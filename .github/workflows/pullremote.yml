@@ -10,7 +10,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        path: C:\src  # Specify the desired checkout path
+        path: C:\  # Specify the desired checkout path
 
    # - name: Navigate to previous git folder and pull changes
     #  run: |
