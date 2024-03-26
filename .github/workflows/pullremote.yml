@@ -9,5 +9,5 @@ jobs:
     steps:
     - name: executing git clone
       run: |
-        cd "C:\src
+        cd "C:\src"
         git clone https://github.com/ashokdevopsorg/node-js-sample.git
