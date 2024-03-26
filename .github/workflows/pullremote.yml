@@ -1,0 +1,18 @@
+name: Auto Pull Latest Code
+
+on: workflow_dispatch
+  
+jobs:
+  pull_latest_code:
+    runs-on: self-hosted  # Specify the label of your self-hosted runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        path: C:\src\  # Specify the desired checkout path
+
+   # - name: Navigate to previous git folder and pull changes
+    #  run: |
+     #   cd /path/to/previous/git/folder
+      #  git pull
