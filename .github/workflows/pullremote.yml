@@ -7,12 +7,7 @@ jobs:
     runs-on: self-hosted  # Specify the label of your self-hosted runner
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        path: C:\  # Specify the desired checkout path
-
-   # - name: Navigate to previous git folder and pull changes
-    #  run: |
-     #   cd /path/to/previous/git/folder
-      #  git pull
+    - name: executing git clone
+      run: |
+        cd "C:\src
+        git clone https://github.com/ashokdevopsorg/node-js-sample.git
