@@ -3,3 +3,10 @@
     if not exist "C:\path\to\your\repo\.git" (
       git clone <repository-url> C:\path\to\your\repo
     )
+
+
+if not exist "E:\destination\apm0001180-ale-dcap-app-tempfilecleaning\.git" (
+    git clone https://***@github.com/northerntrust-internal/apm0001180-ale-dcap-app-tempfilecleaning-git E:\destination\apm0001180-ale-dcap-app-tempfilecleaning
+) else (
+    echo Repository already exists in E:\destination\apm0001180-ale-dcap-app-tempfilecleaning
+)
