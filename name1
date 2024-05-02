@@ -1,3 +1,71 @@
-Invoke-Command -ComputerName RemoteComputer -ScriptBlock {
-    Remove-Item -Path "C:\Path\To\Directory\*" -Force -Recurse
-}
+name: Auto Pull Latest Code
+
+on:
+  # push:
+  #   branches: master
+  workflow_dispatch:
+    #inputs:
+    #  branch:
+    #    description: 'Branch name to checkout'
+    #    required: true
+
+jobs:
+  restart_sys_runner:
+    runs-on: another-server
+    steps:
+      - name: Restart Sys Runner
+        run: |
+          # Execute script to restart the Sys self-hosted runner
+          
+  sys_deployment:
+    runs-on: self-hosted
+    environment: develop
+    needs: restart_sys_runner
+    steps:
+      - name: Navigate to previous git folder and pull changes
+        run: |
+          cd "C:\src\gs-spring-boot"
+          git pull
+          git fetch --prune
+          # git checkout ${{ github.event.inputs.branch }}
+
+  restart_uat_runner:
+    runs-on: another-server
+    needs: restart_sys_runner
+    steps:
+      - name: Restart UAT Runner
+        run: |
+          # Execute script to restart the UAT self-hosted runner
+          
+  uat_deployment:
+    runs-on: self-hosted-uat
+    environment: uat
+    needs: restart_uat_runner
+    steps:
+      - name: Navigate to previous git folder and pull changes
+        run: |
+          cd "C:\src1\gs-spring-boot"
+          git pull
+          git fetch --prune
+          # git checkout ${{ github.event.inputs.branch }}
+
+  restart_prod_runner:
+    runs-on: another-server
+    needs: restart_uat_runner
+    steps:
+      - name: Restart Prod Runner
+        run: |
+          # Execute script to restart the Prod self-hosted runner
+          
+  prod_deployment:
+    runs-on: self-hosted-prod
+    environment: prod
+    needs: restart_prod_runner
+    steps:
+      - name: Navigate to previous git folder and pull changes
+        run: |
+          cd "C:\src2\gs-spring-boot"
+          git pull
+          git fetch --prune
+          # git checkout ${{ github.event.inputs.branch }}
+
